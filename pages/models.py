@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Género del libro
 class Genre(models.Model):
@@ -33,6 +34,7 @@ class Book(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.SET_NULL, null=True)
     publication_year = models.PositiveIntegerField()
     isbn = models.CharField(max_length=13, unique=True)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=False, blank=False, help_text="El usuario que creó (o 'es dueño') de este libro")
 
     def __str__(self):
         return f"{self.title} ({self.publication_year})"

@@ -3,6 +3,8 @@ from .models import Book
 from rest_framework import viewsets
 from .models import Genre, Author, Publisher, Book
 from .serializers import GenreSerializer, AuthorSerializer, PublisherSerializer, BookSerializer
+from .permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 
 class ListTodo(ListView):
@@ -17,17 +19,24 @@ class DetailTodo(DetailView):
     
 
 class GenreViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
 class AuthorViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
 class PublisherViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Publisher.objects.all()
     serializer_class = PublisherSerializer
 
 class BookViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
