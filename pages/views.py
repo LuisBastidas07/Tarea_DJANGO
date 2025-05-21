@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from .models import Genre, Author, Publisher, Book
 from .serializers import GenreSerializer, AuthorSerializer, PublisherSerializer, BookSerializer, UserSerializer
 from .permissions import IsOwnerOrReadOnly
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from django.contrib.auth import get_user_model
 
 
@@ -35,7 +35,7 @@ class PublisherViewSet(viewsets.ModelViewSet):
     serializer_class = PublisherSerializer
 
 class BookViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = [IsAuthenticated]
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     
