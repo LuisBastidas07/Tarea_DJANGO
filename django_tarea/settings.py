@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'whitenoise.runserver_nostatic',
     'accounts',
+    'drf_spectacular',
 ]
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
@@ -61,6 +62,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
@@ -179,3 +181,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+# drf-spectacular settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Library API Project',
+    'DESCRIPTION': 'A sample library API to learn about DRF',
+    'VERSION': '1.0.0',
+}
