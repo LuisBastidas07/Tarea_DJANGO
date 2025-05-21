@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'corsheaders', 
     'rest_framework',
     'whitenoise.runserver_nostatic',
+    'accounts',
 
 ]
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
